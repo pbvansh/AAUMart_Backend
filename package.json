@@ -2,11 +2,11 @@
   "name": "aau-mart-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
-  "type": "module",
+  "main": "index.js",
+ 
   "scripts": {
-    "test": "node app.js",
-    "start": "node app.js"
+    "test": "node index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
