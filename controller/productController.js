@@ -35,6 +35,12 @@ const getAllProducts = asyncHandler(async (req, res) => {
     res.status(200).json(products)
 })
 
+const getStaticProduct = asyncHandler(async(req,res)=>{
+    const id = req.params.id;
+    const product = await Product.findById(id);
+    res.status(200).json(product)
+})
+
 const addProduct = asyncHandler(async (req, res) => {
     // const cat = await Category.findOne({name:req.body.category_id})
     // req.body.category_id = cat._id;
@@ -51,6 +57,7 @@ const addImgUrl = asyncHandler(async (req, res) => {
 
 module.exports = {
     getAllProducts,
+    getStaticProduct,
     addProduct,
     addImgUrl
 }
