@@ -1,15 +1,15 @@
 const express = require('express')
-const { 
+const {
     addProduct,
     getStaticProduct,
-     getAllProducts,
-     addImgUrl
-    } = require('../controller/productController')
+    getAllProducts,
+    addImgUrl
+} = require('../controller/productController')
 const route = express.Router()
 
-route.get('/',getAllProducts)
-route.post('/:id',getStaticProduct)
-route.post('/create',addProduct)
-route.put('/:id/addImgUrl',addImgUrl)
+route.get('/', getAllProducts)
+route.get('/:id', getStaticProduct)
+route.post('/create', addProduct)
+route.put('/:id/addImgUrl', addImgUrl)
 
 module.exports = route

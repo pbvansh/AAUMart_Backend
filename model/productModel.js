@@ -23,10 +23,6 @@ const prodSchema = new mongoose.Schema({
         type : Number,
         required : [true,'please provide product price'],
     },
-    discount_id : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Discount'
-    },
     img_url :{
          type : String,
     }
