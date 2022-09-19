@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const JWT = require('jsonwebtoken')
+require('dotenv').config()
 
 const userSchema = new mongoose.Schema({
     name : {
@@ -10,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     mobilenumber : {
         type:Number,
-        required : [true , 'please enter your mobile number']
+ 
     },
     password : {
         type:String,
@@ -21,6 +23,10 @@ const userSchema = new mongoose.Schema({
         default : false,
     }
 })
+
+userSchema.methods.createJWT = function(){
+    return JWT.sign({userId :this._id , userEmail : this.email},process.env.JWTSECRET,{expiresIn:'1d'})
+}
 
 
 module.exports = mongoose.model('User',userSchema)
