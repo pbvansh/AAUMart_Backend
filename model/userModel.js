@@ -25,7 +25,10 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.methods.createJWT = function(){
-    return JWT.sign({userId :this._id , userEmail : this.email},process.env.JWTSECRET,{expiresIn:'1d'})
+    return JWT.sign({userId :this._id , userEmail : this.email},process.env.JWTSECRET,{
+        algorithm : ['ES384'],
+        expiresIn: '3d'
+    })
 }
 
 
