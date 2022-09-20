@@ -16,6 +16,7 @@ route.post('/login', asyncHandler(async (req, res) => {
 
             res.status(200).json({
                 auth: true,
+                user: user.email,
                 token: user.createJWT()
             })
         } else {
