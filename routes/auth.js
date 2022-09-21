@@ -8,21 +8,27 @@ require('dotenv').config()
 
 route.post('/login', asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) {
-        res.status(400).json({ msg: "Please provide email or password" })
-    } else {
-        const user = await User.findOne({ email })
-        if (user && BC.compare(password, user.password)) {
 
-            res.status(200).json({
-                auth: true,
-                user: user.email,
-                token: user.createJWT()
-            })
+    try {
+        if (!email || !password) {
+            res.status(400).json({ msg: "Please provide email or password" })
         } else {
-            res.status(400).json({ msg: 'invalid email or password' })
+            const user = await User.findOne({ email })
+            if (user && BC.compare(password, user.password)) {
+    
+                res.status(200).json({
+                    auth: true,
+                    user: user.email,
+                    token: user.createJWT()
+                })
+            } else {
+                res.status(400).json({ msg: 'invalid email or password' })
+            }
         }
+    } catch (error) {
+        res.status(400).json({msg : 'invalid email or password'})
     }
+    
 
 }))
 
