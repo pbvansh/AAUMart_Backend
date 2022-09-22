@@ -34,7 +34,7 @@ userSchema.pre('save', async function(){
 
 
 userSchema.methods.createJWT = function(){
-    return JWT.sign({userId :this._id , userEmail : this.email},process.env.JWTSECRET,{
+    return JWT.sign({userId :this._id , userEmail : this.email, isAdmin : this.isAdmin},process.env.JWTSECRET,{
         expiresIn: '3d'
     })
 }
