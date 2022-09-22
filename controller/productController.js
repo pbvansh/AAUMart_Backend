@@ -13,7 +13,8 @@ const getStaticProduct = asyncHandler(async(req,res)=>{
 })
 
 const addProduct = asyncHandler(async (req, res) => {
-    const product = await Product.create(req.body)
+    const {name,desc,category,price} = req.body;
+    const product = await Product.create({name,desc,category,price})
     console.log('addProduct');
     res.status(200).json(product)
 })
