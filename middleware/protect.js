@@ -15,7 +15,6 @@ const protect = (req, res, next) => {
         try {
             const secret = process.env.JWTSECRET;
             const user = JWT.verify(token, secret);
-            console.log({ user });
             req.user = user;
             next();
         } catch (ex) {
