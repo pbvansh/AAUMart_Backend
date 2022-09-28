@@ -16,10 +16,11 @@ route.post('/login', asyncHandler(async (req, res) => {
         } else {
             const user = await User.findOne({ email })
             if (user && BC.compare(password, user.password)) {
-                res.cookie('AAU-token',user.createJWT());
+                res.cookie('AAU-token',user.createJWT())
                 res.status(200).json({
                     auth: true,
-                    user: user.email
+                    user: user.email,
+                    token: user.createJWT()
                 })
             } else {
                 res.status(400).json({ msg: 'invalid email or password' })
