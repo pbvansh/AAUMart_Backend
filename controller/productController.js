@@ -6,15 +6,15 @@ const getAllProducts = asyncHandler(async (req, res) => {
     res.status(200).json(products)
 })
 
-const getStaticProduct = asyncHandler(async(req,res)=>{
+const getStaticProduct = asyncHandler(async (req, res) => {
     const id = req.params.id;
     const product = await Product.findById(id);
     res.status(200).json(product)
 })
 
 const addProduct = asyncHandler(async (req, res) => {
-    const {name,desc,category,price} = req.body;
-    const product = await Product.create({name,desc,category,price})
+    const { name, desc, category, price } = req.body;
+    const product = await Product.create({ name, desc, category, price })
     console.log('addProduct');
     res.status(200).json(product)
 })
@@ -25,9 +25,16 @@ const addImgUrl = asyncHandler(async (req, res) => {
     res.status(200).json(product)
 })
 
+const updateProduct = asyncHandler(async (req, res) => {
+    const id = req.params.id;
+    const product = await Product.findByIdAndUpdate(id, req.body, { new: true })
+    res.status(200);
+})
+
 module.exports = {
     getAllProducts,
     getStaticProduct,
     addProduct,
-    addImgUrl
+    addImgUrl,
+    updateProduct
 }

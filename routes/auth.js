@@ -16,7 +16,7 @@ route.post('/login', asyncHandler(async (req, res) => {
         } else {
             const user = await User.findOne({ email })
             if (user && BC.compare(password, user.password)) {
-                res.cookie('AAU-token',user.createJWT())
+                res.cookie('AAU-token', user.createJWT())
                 res.status(200).json({
                     auth: true,
                     user: user.email,
@@ -48,7 +48,6 @@ route.post('/signup', asyncHandler(async (req, res) => {
     } catch (error) {
         res.status(400).json({ msg: error.code && ('Email address is already exist') })
     }
-
 }))
 
 // verify JWT 
@@ -60,7 +59,7 @@ const verifyJWT = async (req, res, next) => {
     }
     else {
         try {
-            const payload = await JWT.decode(token)
+            const payload = JWT.decode(token)
             const user = await User.findById(payload.userId).select('-password')
             if (payload.userEmail == user.email) {
                 req.user = user;
