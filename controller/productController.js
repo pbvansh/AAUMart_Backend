@@ -28,7 +28,7 @@ const addImgUrl = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
     const id = req.params.id;
     const product = await Product.findByIdAndUpdate(id, req.body, { new: true })
-    res.status(200);
+    res.status(200).json(product);
 })
 
 module.exports = {
