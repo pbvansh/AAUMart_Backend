@@ -11,7 +11,7 @@ const addProductToCart = asyncHandler(async (req, res) => {
 const removeProductToCart = asyncHandler(async (req, res) => {
 
     const id = req.params.id;
-    const item = await Cart.findOneAndDelete({ product_id: id })
+    const item = await Cart.findByIdAndDelete(id)
     res.status(200).json(item)
 
 })
