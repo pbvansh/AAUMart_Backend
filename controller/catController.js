@@ -13,8 +13,8 @@ const addCategory = asyncHandler(async (req, res) => {
 
 const deleteCategory = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    await Category.findByIdAndDelete(id)
-    res.status(200).json({ msg: 'Catogory deleted successful' })
+    await Category.findByIdAndDelete(id);
+    res.status(200).json({ msg: 'Catogory deleted successful' });
 })
 
 module.exports = {
