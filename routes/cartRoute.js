@@ -10,6 +10,6 @@ const {
 route.post('/addItem',addProductToCart);
 route.delete('/:id',removeProductToCart);
 route.put('/:id',updateProductToCart);
-route.get('/:id',getItemToCart)
+route.get('/:id',getItemToCart);
 
 module.exports = route;
