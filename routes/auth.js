@@ -15,7 +15,7 @@ route.post('/login', asyncHandler(async (req, res) => {
             res.status(400).json({ msg: "Please provide email or password" })
         } else {
             const user = await User.findOne({ email })
-            if (user && BC.compare(password, user.password)) {
+            if (user && await BC.compare(password, user.password)) {
                 res.cookie('AAU-token', user.createJWT())
                 res.status(200).json({
                     auth: true,
