@@ -19,7 +19,7 @@ const placeOrder = asyncHandler(async (req, res) => {
             email: req.user.userEmail
         })
 
-        const isExistingCustomer = preCostomer ? preCostomer.data.length != 0 : false;
+        const isExistingCustomer = preCostomer ? preCostomer.data.length >=1 : false;
         let newCustomer;
         if (!isExistingCustomer) {
             newCustomer = await stripe.customers.create({
