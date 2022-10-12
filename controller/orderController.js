@@ -15,7 +15,7 @@ const placeOrder = asyncHandler(async (req, res) => {
             total += sum;
         }
 
-        const preCostomer = stripe.customers.list({
+        const preCostomer = await stripe.customers.list({
             email: req.user.userEmail
         })
         console.log(preCostomer.data);
