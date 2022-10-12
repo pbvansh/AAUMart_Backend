@@ -3,7 +3,8 @@ const route = express.Router();
 const {
     placeOrder,
 } = require('../controller/orderController');
+const { protect } = require('../middleware/protect');
 
-route.post('/placeOrder', placeOrder);
+route.post('/placeOrder',protect, placeOrder);
 
 module.exports = route;

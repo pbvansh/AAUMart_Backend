@@ -27,6 +27,8 @@
     "express-async-handler": "^1.2.0",
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.0"
+    "mongoose": "^6.5.0",
+    "stripe": "^10.13.0",
+    "uuid": "^9.0.0"
   }
 }
