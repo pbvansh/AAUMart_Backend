@@ -81,6 +81,7 @@ route.get('/setcookie', (req, res) => {
     res.cookie('token', 'pratik vansh token', {
         secure: true,
         httpOnly: false,
+        sameSite : 'strict'
     });
     res.send('Cookie have been saved successfully');
 })
