@@ -1,14 +1,20 @@
 
 const asyncHandler = require('express-async-handler');
 const Order = require('../model/order_itemsModel')
-const stripe = require('stripe')('sk_test_51LrwuaSETLFq9Kvw0OskKrHyFUaHsHnV0StiHYZVye3TCH4Iwq98lxQg8INATPwp4pSYaGmMxX9sVWFMiDufddwq00XbAxNuNb')
 const { v4 } = require('uuid');
 const Cart = require('../model/cartModel');
+require('dotenv').config()
+const Razorpey = require('razorpay')
+
+const Instance = new Razorpey({
+    key_id: process.env.RAZORPAY_API_KEY,
+    key_secret: process.env.RAZORPAY_API_SECRET
+})
 
 const placeOrder = asyncHandler(async (req, res) => {
-    const { products, quantity,user_id, paymentInfo } = req.body;
+    const { products, user_id } = req.body;
     if (products) {
-        const item = await Cart.find({user_id}).populate('product_id');
+        const item = await Cart.find({ user_id }).populate('product_id');
         console.log(item);
         let total = 0;
         for (let i = 0; i < item.length; i++) {
@@ -16,32 +22,16 @@ const placeOrder = asyncHandler(async (req, res) => {
             total += sum;
         }
 
-        const preCostomer = await stripe.customers.list({
-            email: paymentInfo.email
-        })
-        console.log(preCostomer.data);
-        const isExistingCustomer = preCostomer.data.length >=1;
-        let newCustomer;
-        if (!isExistingCustomer) {
-            newCustomer = await stripe.customers.create({
-                email: paymentInfo.email,
-                source: paymentInfo.id
-            })
+        const options = { 
+            amount : Number(total * 100),
+            currency : "INR"
         }
 
-        const charge = await stripe.charges.create({
-            amount: total * 100,
-            currency: 'INR',
-            receipt_email: paymentInfo.email,
-            customer: isExistingCustomer ? preCostomer.data[0].id : newCustomer.id,
-            description: `My First Test Charge | ${req.user.userEmail}`,
+        const razorOrder = await Instance.orders.create(options);
+        console.log(razorOrder);
 
-        }, {
-            idempotencyKey: v4()
-        })
-
-        const order = await Order.create(req.body)
-        res.status(200).json({ order, msg: "payment was successfully",charge })
+        // const order = await Order.create(req.body)
+        res.status(200).json({msg: "order was successfully"})
 
     } else {
         res.status(400).json({ "msg": "please provide product info" })
