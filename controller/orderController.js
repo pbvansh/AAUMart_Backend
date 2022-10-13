@@ -39,9 +39,10 @@ const placeOrder = asyncHandler(async (req, res) => {
 })
 
 
-const paymentVerification = asyncHandler(async(req,rs)=>{
+const paymentVerification = asyncHandler(async(req,res)=>{
     console.log(req.body);
-    res.status(200).json({success : true})
+    res.redirect('https://AAUMartBackend.pratikvansh.repl.co/success')
+    // res.status(200).json({success : true})
 
 })
 
