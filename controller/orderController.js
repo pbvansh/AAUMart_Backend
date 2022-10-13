@@ -27,7 +27,7 @@ const placeOrder = asyncHandler(async (req, res) => {
                 source: paymentInfo.id
             })
         }
-
+            console.log(total*100)
         const charge = await stripe.charges.create({
             amount: total * 100,
             currency: 'INR',
