@@ -6,9 +6,9 @@ const { v4 } = require('uuid');
 const Cart = require('../model/cartModel');
 
 const placeOrder = asyncHandler(async (req, res) => {
-    const { products, quantity, paymentInfo } = req.body;
+    const { products, quantity,user_id, paymentInfo } = req.body;
     if (products) {
-        const item = await Cart.find({ user_id: req.user.id }).populate('product_id');
+        const item = await Cart.find({user_id}).populate('product_id');
         console.log(item);
         let total = 0;
         for (let i = 0; i < item.length; i++) {
