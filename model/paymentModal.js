@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const paymentSchema = new mongoose.Schema({
 
     user_id : {
-        type : mongoose.Schema.Types.ObjectId,
-        required : true
+        type : mongoose.Schema.Types.ObjectId
     },
     razorpay_order_id : {
         type : String,
