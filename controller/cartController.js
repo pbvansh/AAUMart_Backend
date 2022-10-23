@@ -26,7 +26,7 @@ const updateProductToCart = asyncHandler(async (req, res) => {
 
 const getItemToCart = asyncHandler(async (req, res) => {
     const id = req.params.id;
-    const item = await Cart.find({ user_id: id }).populate('product_id')
+    const item = await Cart.find({ user_id: id , isOrdered :false }).populate('product_id')
     res.status(200).json(item)
 
 })

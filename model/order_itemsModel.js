@@ -5,6 +5,7 @@ const order_itemsSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order_details',
+        
         required: true,
     },
     products: [

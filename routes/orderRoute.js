@@ -8,7 +8,7 @@ const {
 const { protect } = require('../middleware/protect');
 
 route.post('/placeOrder', protect, placeOrder);
-route.post('/payment', paymentVerification);
+route.post('/payment/:id', paymentVerification);
 route.put('/:id/addUserId', protect, addUserToPayment)
 
 module.exports = route;
