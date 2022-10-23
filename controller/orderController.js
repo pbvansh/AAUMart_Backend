@@ -64,6 +64,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 quantity: item.product_id.quantity
             }
         })
+        console.log(orderItem);
         const order = await Order_item.create({
             user_id,
             products: orderItem

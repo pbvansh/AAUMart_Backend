@@ -19,6 +19,7 @@ const cartSchema = new mongoose.Schema({
     },
 
     isOrdered : {
+        type : Boolean,
         default : false
     }
 },
