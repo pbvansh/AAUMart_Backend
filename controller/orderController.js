@@ -65,15 +65,15 @@ const paymentVerification = asyncHandler(async (req, res) => {
             }
         })
 
-        if (cartItems.length > 0){
+        if (cartItems.length > 0) {
             const order = await Order_item.create({
                 user_id,
                 products: orderItem
             })
 
-            await Cart.updateMany({isOrdered : false},{isOrdered : true},{new : true})
+            await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
         }
-           
+
         res.redirect('http://localhost:3000/success?payment_id=' + razorpay_payment_id)
 
     } else {
@@ -91,8 +91,15 @@ const addUserToPayment = asyncHandler(async (req, res) => {
     res.status(200).json(payment)
 })
 
+const getAllProducts = asyncHandler(async (req, res) => {
+    const user_id = req.user.userId;
+    const orders = await Order_item.find({user_id }).populate("products.id")
+    res.status(200).json(orders)
+})
+
 module.exports = {
     placeOrder,
     paymentVerification,
-    addUserToPayment
+    addUserToPayment,
+    getAllProducts
 }
