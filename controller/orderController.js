@@ -64,13 +64,16 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 quantity: item.product_id.quantity
             }
         })
-        console.log(orderItem);
-        const order = await Order_item.create({
-            user_id,
-            products: orderItem
-        })
-        console.log(order);
 
+        if (cartItems.length > 0){
+            const order = await Order_item.create({
+                user_id,
+                products: orderItem
+            })
+
+            await Cart.updateMany({isOrdered : false},{isOrdered : true},{new : true})
+        }
+           
         res.redirect('http://localhost:3000/success?payment_id=' + razorpay_payment_id)
 
     } else {
