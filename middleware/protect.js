@@ -3,11 +3,11 @@ const JWT = require('jsonwebtoken');
 require('dotenv').config();
 
 const protect = (req, res, next) => {
-
+    console.log('protect');
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-       
-        const token = req.headers.authorization.split(' ')[1]
 
+        const token = req.headers.authorization.split(' ')[1]
+        log(token)
         if (!token) {
             return res.status(401).send('Access denied. Not Authenticated...');
         }
