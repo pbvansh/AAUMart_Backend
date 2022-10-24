@@ -8,9 +8,11 @@ const {
 } = require('../controller/orderController');
 const { protect } = require('../middleware/protect');
 
+
+route.get('/products', protect, getAllProducts)
 route.post('/placeOrder', protect, placeOrder);
 route.post('/:id/payment', paymentVerification);
 route.put('/:id/addUserId', protect, addUserToPayment);
-route.get('/products', protect, getAllProducts)
+
 
 module.exports = route;
