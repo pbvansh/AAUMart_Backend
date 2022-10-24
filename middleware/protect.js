@@ -7,7 +7,7 @@ const protect = (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 
         const token = req.headers.authorization.split(' ')[1]
-        log(token)
+        console.log(token)
         if (!token) {
             return res.status(401).send('Access denied. Not Authenticated...');
         }
