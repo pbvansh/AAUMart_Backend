@@ -92,7 +92,6 @@ const addUserToPayment = asyncHandler(async (req, res) => {
 })
 
 const getAllProducts = asyncHandler(async (req, res) => {
-    console.log('come.....');
     const user_id = req.user.userId;
     const orders = await Order_item.find({user_id }).populate("products.id")
     res.status(200).json(orders)
