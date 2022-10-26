@@ -21,7 +21,8 @@ const order_itemsSchema = new mongoose.Schema({
     status: {
         type: String,
         enum : ['Order Placed','Preparing', 'Shipped', 'Delivered'],
-        default: 'Order Placed'
+        default: 'Order Placed',
+        required : true
     }
 },
     {
