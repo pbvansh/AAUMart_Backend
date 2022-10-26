@@ -5,7 +5,7 @@ const order_itemsSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order_details',
-        
+
         required: true,
     },
     products: [
@@ -15,13 +15,13 @@ const order_itemsSchema = new mongoose.Schema({
                 ref: "Product",
                 required: true,
             },
-            quantity:{ type: Number, required: true, default: 1 }
+            quantity: { type: Number, required: true, default: 1 }
         }
     ],
-    status : {
-        type : String,
-        default : "Order Placed",
-        enum : ['Order Placed','Preparing','Shipped','Delivered']
+    status: {
+        type: String,
+        default: "Order Placed",
+        enum: ['Order Placed', 'Preparing', 'Shipped', 'Delivered']
     }
 },
     {
