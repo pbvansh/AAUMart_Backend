@@ -18,6 +18,11 @@ const order_itemsSchema = new mongoose.Schema({
             quantity:{ type: Number, required: true, default: 1 }
         }
     ],
+    status : {
+        type : String,
+        default : "Order Placed",
+        enum : ['Order Placed','Preparing','Shipped','Delivered']
+    }
 },
     {
         timestamps: true
