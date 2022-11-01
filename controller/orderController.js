@@ -70,6 +70,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
             let sum = Number(cartItems[i].quantity) * Number(cartItems[i].product_id.price)
             total += sum;
         }
+        console.log(total);
 
         if (cartItems.length > 0) {
             const order = Order_item.create({
@@ -77,7 +78,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 total,
                 products: orderItem
             })
-            
+
                 await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
         
         }
