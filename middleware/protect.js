@@ -19,6 +19,8 @@ const protect = (req, res, next) => {
             console.log(ex);
             res.status(400).send('Access denied. Invalid auth token...');
         }
+    }else{
+        res.status(400).send('Not Authorze')
     }
 }
 

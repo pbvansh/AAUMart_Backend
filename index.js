@@ -25,6 +25,8 @@ app.use('/api/product', require('./routes/productRoute'))
 app.use('/api/category', require('./routes/catRoute'))
 app.use('/api/cart',require('./routes/cartRoute'))
 app.use('/api/order',require('./routes/orderRoute'))
+app.use('/api/profile',require('./routes/profile'))
+app.use('/api/admin',require('./routes/admin'))
 
 app.get('/', (req, res) => {
    res.send('hello from simple server :)')
