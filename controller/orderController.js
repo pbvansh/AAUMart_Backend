@@ -76,10 +76,10 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 user_id,
                 total,
                 products: orderItem
-            }).then(async() => {
-                await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
             })
-
+            
+                await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
+        
         }
 
         res.redirect('http://localhost:3000/success?payment_id=' + razorpay_payment_id)
