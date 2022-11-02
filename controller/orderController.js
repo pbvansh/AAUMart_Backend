@@ -19,7 +19,7 @@ const getTotalAmount = async (user_id) => {
 
 const placeOrder = asyncHandler(async (req, res) => {
     const { products, user_id } = req.body;
-    const item = await Cart.find({ user_id }).populate('product_id');
+    const item = await Cart.find({ user_id , isOrdered: true  }).populate('product_id');
     let total = 0;
     for (let i = 0; i < item.length; i++) {
         let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
@@ -61,7 +61,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         })
 
         //place order && store data in order table
-        const cartItems = await Cart.find({ user_id, isOrdered: false });
+        const cartItems = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
         const orderItem = cartItems.map((item) => {
             return {
                 id: item.product_id._id,
@@ -71,7 +71,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         // const total = getTotalAmount(user_id)
 
         if (cartItems.length > 0) {
-            const order = Order_item.create({
+            const order = await Order_item.create({
                 user_id,
                 products: orderItem
             })
