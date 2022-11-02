@@ -13,20 +13,19 @@ const Instance = new Razorpey({
 })
 
 const getTotalAmount = async (user_id) => {
+
+    return total;
+}
+
+const placeOrder = asyncHandler(async (req, res) => {
+    const { products, user_id } = req.body;
     const item = await Cart.find({ user_id }).populate('product_id');
     let total = 0;
     for (let i = 0; i < item.length; i++) {
         let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
         total += sum;
     }
-    return total;
-}
-
-const placeOrder = asyncHandler(async (req, res) => {
-    const { products, user_id } = req.body;
     if (products) {
-
-        const total = getTotalAmount(user_id)
         const options = {
             amount: Number(total * 100),
             currency: "INR"
@@ -69,12 +68,12 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 quantity: item.product_id.quantity
             }
         })
-        const total = getTotalAmount(user_id)
-        
+        // const total = getTotalAmount(user_id)
+
         if (cartItems.length > 0) {
             const order = Order_item.create({
                 user_id,
-                total,
+                // total,
                 products: orderItem
             })
 
