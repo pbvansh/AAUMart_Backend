@@ -73,7 +73,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         if (cartItems.length > 0) {
             const order = Order_item.create({
                 user_id,
-                // total,
+                // total
                 products: orderItem
             })
 

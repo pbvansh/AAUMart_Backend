@@ -18,10 +18,10 @@ const order_itemsSchema = new mongoose.Schema({
             quantity: { type: Number, required: true, default: 1 }
         }
     ],
-    total: {
-        type: Number,
-        required: true
-    },
+    // total: {
+    //     type: Number,
+    //     required: true
+    // },
     status: {
         type: String,
         enum: ['Order Placed', 'Preparing', 'Shipped', 'Delivered'],
