@@ -19,7 +19,7 @@ const getTotalAmount = async (user_id) => {
 
 const placeOrder = asyncHandler(async (req, res) => {
     const { products, user_id } = req.body;
-    const item = await Cart.find({ user_id , isOrdered: true  }).populate('product_id');
+    const item = await Cart.find({ user_id , isOrdered: false  }).populate('product_id');
     let total = 0;
     for (let i = 0; i < item.length; i++) {
         let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
@@ -68,11 +68,17 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 quantity: item.product_id.quantity
             }
         })
-        // const total = getTotalAmount(user_id)
+
+        let total = 0;
+        for (let i = 0; i < cartItems.length; i++) {
+            let sum = Number(cartItems[i].quantity) * Number(cartItems[i].product_id.price)
+            total += sum;
+        }
 
         if (cartItems.length > 0) {
             const order = await Order_item.create({
                 user_id,
+                total,
                 products: orderItem
             })
             console.log(order);
