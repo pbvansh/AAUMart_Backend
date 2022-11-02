@@ -12,16 +12,21 @@ const Instance = new Razorpey({
     key_secret: process.env.RAZORPAY_API_SECRET
 })
 
+const getTotalAmount = async (user_id) => {
+    const item = await Cart.find({ user_id }).populate('product_id');
+    let total = 0;
+    for (let i = 0; i < item.length; i++) {
+        let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
+        total += sum;
+    }
+    return total;
+}
+
 const placeOrder = asyncHandler(async (req, res) => {
     const { products, user_id } = req.body;
     if (products) {
-        const item = await Cart.find({ user_id }).populate('product_id');
-        let total = 0;
-        for (let i = 0; i < item.length; i++) {
-            let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
-            total += sum;
-        }
 
+        const total = getTotalAmount(user_id)
         const options = {
             amount: Number(total * 100),
             currency: "INR"
@@ -64,14 +69,8 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 quantity: item.product_id.quantity
             }
         })
-
-        let total = 0;
-        for (let i = 0; i < cartItems.length; i++) {
-            let sum = Number(cartItems[i].quantity) * Number(cartItems[i].product_id.price)
-            total += sum;
-        }
-        console.log(total);
-
+        const total = getTotalAmount(user_id)
+        
         if (cartItems.length > 0) {
             const order = Order_item.create({
                 user_id,
@@ -79,8 +78,8 @@ const paymentVerification = asyncHandler(async (req, res) => {
                 products: orderItem
             })
 
-                await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
-        
+            await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
+
         }
 
         res.redirect('http://localhost:3000/success?payment_id=' + razorpay_payment_id)
