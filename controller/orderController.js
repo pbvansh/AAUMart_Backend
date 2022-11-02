@@ -73,10 +73,9 @@ const paymentVerification = asyncHandler(async (req, res) => {
         if (cartItems.length > 0) {
             const order = Order_item.create({
                 user_id,
-                // total
                 products: orderItem
             })
-
+            console.log(order);
             await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
 
         }
