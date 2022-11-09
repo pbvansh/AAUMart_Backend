@@ -4,7 +4,7 @@ const route = express.Router();
 const User = require('../model/userModel')
 
 route.get('/me', protect, async (req, res) => {
-    const user = await User.findById(req.user.userId)
+    const user = await User.findById(req.user.userId).select('-password')
     res.status(200).json(user)
 })
 
