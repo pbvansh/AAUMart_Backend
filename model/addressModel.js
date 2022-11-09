@@ -5,29 +5,38 @@ const addressShema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     },
-    address_line1 :{
+    name :{
         type: String,
         required : [true,'please provide address line 1']
     },
-    address_line2 :{
-        type: String,
-        required : [true,'please provide address line 2']
+    mobile : {
+        type : Number,
+        required :[true,'please provide you mobile number']
     },
-    country : {
-        type :String,
+    pincode : {
+        type :Number,
         required : [true,'please provide your country']
+    },
+    locality :{
+        type :String,
+        required : [true,'please provide your postal_code']
+    },
+    address :{
+        type :String,
+        required : [true,'please provide your postal_code']
     },
     city : {
         type :String,
         required : [true,'please provide your city']
     },
-    postal_code :{
+    state : {
         type :String,
-        required : [true,'please provide your postal_code']
+        required : [true,'please provide your city']
     },
-    mobile : {
-        type : String,
-        required :[true,'please provide you mobile number']
+    type : {
+        type :String,
+        enum : ['Home','Work'],
+        required : [true,'please provide address type']
     },
 },{timestamps : true})
 
