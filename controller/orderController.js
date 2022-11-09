@@ -74,7 +74,6 @@ const paymentVerification = asyncHandler(async (req, res) => {
             let sum = Number(cartItems[i].quantity) * Number(cartItems[i].product_id.price)
             total += sum;
         }
-        console.log(total);
         if (cartItems.length > 0) {
             const order = await Order_item.create({
                 user_id,

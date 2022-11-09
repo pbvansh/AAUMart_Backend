@@ -30,7 +30,6 @@ const isAdmin = (req, res, next) => {
         if (req.user.isAdmin) {
             next();
         } else {
-            console.log('403');
             res.status(403).send('Access denied. Not Authenticated...');
         }
     })

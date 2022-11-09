@@ -9,7 +9,7 @@ route.get('/me', protect, async (req, res) => {
 })
 
 route.put('/update/me', protect, async (req, res) => {
-    const user = await User.findByIdAndUpdate(req.user.userId, req.body, { new: true });
+    const user = await User.findByIdAndUpdate(req.user.userId, req.body, { new: true }).select('-password')
     res.status(200).json(user)
 })
 

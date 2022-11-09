@@ -35,7 +35,6 @@ route.post('/login', asyncHandler(async (req, res) => {
 
 //POST signup user
 route.post('/signup', asyncHandler(async (req, res) => {
-    console.log(req.body);
     const { firstName, lastName, Gender, email, mobilenumber, password, isAdmin } = req.body;
     try {
         if (!email || !password) {
