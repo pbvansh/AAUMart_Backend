@@ -8,7 +8,7 @@ const prodSchema = new mongoose.Schema({
         min:1,
         max:50,
         unique : true,
-    },
+    },      
     desc:{
         type: String,
         required : [true,'please provide product name'],
