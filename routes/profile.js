@@ -14,12 +14,12 @@ route.put('/update/me', protect, async (req, res) => {
     res.status(200).json(user)
 })
 
-route.get('/addresses/me',protect,async(req,res)=>{
-        const addresses = await Address.find({user_id : req.user.userId})
-        res.status(200).json(addresses)
+route.get('/addresses/me', protect, async (req, res) => {
+    const addresses = await Address.find({ user_id: req.user.userId })
+    res.status(200).json(addresses)
 })
 
-route.post('/address/create',protect,async(req,res)=>{
+route.post('/address/create', protect, async (req, res) => {
     req.body.user_id = req.user.userId
     const address = await Address.create(req.body);
     res.status(200).json(address)
