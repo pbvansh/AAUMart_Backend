@@ -15,7 +15,7 @@ route.put('/update/me', protect, async (req, res) => {
 })
 
 route.get('/addresses/me',protect,async(req,res)=>{
-        const addresses = await Address.findById(req.user.userId)
+        const addresses = await Address.find({user_id : req.user.userId})
         res.status(200).json(addresses)
 })
 
