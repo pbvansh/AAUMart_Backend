@@ -20,7 +20,7 @@ route.get('/addresses/me',protect,async(req,res)=>{
 })
 
 route.post('/address/create',protect,async(req,res)=>{
-    req.body.user_id = req.body.userId
+    req.body.user_id = req.user.userId
     const address = await Address.create(req.body);
     res.status(200).json(address)
 })
