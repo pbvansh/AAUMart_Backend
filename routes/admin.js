@@ -24,7 +24,6 @@ route.put('/order/:id', protect, async (req, res) => {
 })
 
 route.get('/order/address/:id', async (req, res) => {
-    
     try {
         const user_id = req.params.id;
         const address = await Address.findOne({ user_id })
