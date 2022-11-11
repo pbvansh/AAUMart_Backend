@@ -25,6 +25,16 @@ route.post('/address/create', protect, async (req, res) => {
     res.status(200).json(address)
 })
 
+route.delete('/address/:id', protect, async (req, res) => {
+    const id = req.params.id;
+    try {
+        await Address.findByIdAndDelete(id);
+        res.status(200).json({ msg: 'Address deleted succsessfully' })
+    } catch (error) {
+        res.status(200).json({ msg: 'Something want wrong...' })
+    }
+
+})
 
 
 module.exports = route;
