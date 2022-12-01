@@ -65,7 +65,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         const orderItem = cartItems.map((item) => {
             return {
                 id: item.product_id._id,
-                quantity: item.product_id.quantity
+                quantity: item.quantity
             }
         })
 
