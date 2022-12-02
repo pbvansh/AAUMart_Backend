@@ -27,7 +27,8 @@
     "express-async-handler": "^1.2.0",
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.13",
+    "mogoose": "^0.0.1-security",
+    "mongoose": "^6.7.5",
     "razorpay": "^2.8.3",
     "uuid": "^9.0.0"
   }
