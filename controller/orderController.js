@@ -84,7 +84,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
 
         }
 
-        res.redirect('http://localhost:3000/success?payment_id=' + razorpay_payment_id)
+        res.redirect('https://aau-mart.vercel.app/success?payment_id=' + razorpay_payment_id)
 
     } else {
 
