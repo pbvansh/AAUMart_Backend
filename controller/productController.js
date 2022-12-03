@@ -2,7 +2,11 @@ const asyncHandler = require('express-async-handler')
 const Product = require('../model/productModel')
 
 const getAllProducts = asyncHandler(async (req, res) => {
-    let products = await Product.find();
+    console.log(req.query);
+    const { Min, Max } = req.query;
+        let products = await Product.find({
+            price : {$gt : Min ,$lt : Max}
+        });
     res.status(200).json(products)
 })
 
@@ -31,10 +35,10 @@ const updateProduct = asyncHandler(async (req, res) => {
     res.status(200).json(product);
 })
 
-const deleteProduct = asyncHandler(async (req,res)=>{
+const deleteProduct = asyncHandler(async (req, res) => {
     const id = req.params.id;
     await Product.findByIdAndDelete(id)
-    res.status(200).json({msg : "prodicu deleted successfuly"});
+    res.status(200).json({ msg: "prodicu deleted successfuly" });
 })
 
 module.exports = {
