@@ -4,7 +4,7 @@ const Product = require('../model/productModel')
 const getAllProducts = asyncHandler(async (req, res) => {
     console.log(req.query);
     const { Min, Max } = req.query;
-        let products = await Product.find();
+    const products = await Product.find();
     res.status(200).json(products)
 })
 
