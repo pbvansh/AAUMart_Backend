@@ -5,19 +5,19 @@ const getAllProducts = asyncHandler(async (req, res) => {
   let queries = [];
   const { Min, Max, category, name } = req.query;
 
-  if (category != undefined) {
+  if (category != undefined && category !== 'all') {
     queries.push({ category })
   } else queries.push({})
 
   if (name !== undefined) {
     queries.push({ name })
   } else queries.push({})
-  
+
   if (Min !== undefined && Max !== undefined) {
-    queries.push({ "price": { $gt: Number(Min), $lt: Number(Max) } })
+    queries.push({ "price": { $gte: Number(Min), $lte: Number(Max) } })
   }
 
-  const products = await Product.find({ "$or": queries });
+  const products = await Product.find({ "$and": queries });
   res.status(200).json(products)
 })
 
