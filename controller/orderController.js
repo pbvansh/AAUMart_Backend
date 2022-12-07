@@ -12,11 +12,6 @@ const Instance = new Razorpey({
     key_secret: process.env.RAZORPAY_API_SECRET
 })
 
-const getTotalAmount = async (user_id) => {
-
-    return total;
-}
-
 const placeOrder = asyncHandler(async (req, res) => {
     const { products, user_id } = req.body;
     const item = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
