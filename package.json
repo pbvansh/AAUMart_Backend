@@ -26,7 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mogoose": "^0.0.1-security",
     "mongoose": "^6.7.5",
-    "node-fetch": "^3.3.0",
+    "node-fetch": "2.0",
     "razorpay": "^2.8.3",
     "uuid": "^9.0.0"
   }
