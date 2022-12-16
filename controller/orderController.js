@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Cart = require('../model/cartModel');
 const Payment = require('../model/paymentModal')
 const Order_item = require('../model/order_itemsModel')
+const Product = require('../model/productModel')
 require('dotenv').config()
 const crypto = require('crypto')
 const Razorpey = require('razorpay')
@@ -17,8 +18,10 @@ const placeOrder = asyncHandler(async (req, res) => {
   const item = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
   let total = 0;
   for (let i = 0; i < item.length; i++) {
-    let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
-    total += sum;
+    if (item[i].product_id.stock >= item[i].quantity) {
+      let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
+      total += sum;
+    }
   }
   if (products) {
     const options = {
@@ -57,12 +60,21 @@ const paymentVerification = asyncHandler(async (req, res) => {
 
     //place order && store data in order table
     const cartItems = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
-    const orderItem = cartItems.map((item) => {
+
+    const data = cartItems.filter((item) => item.product_id.stock > 0)
+
+    const orderItem = data.map((item) => {
       return {
         id: item.product_id._id,
         quantity: item.quantity
       }
     })
+    for (let i = 0; i < data.length; i++) {
+      const stock = Number(data[i].product_id.stock) - Number(orderItem[i].quantity)
+      console.log(stock)
+      const del = await Product.findByIdAndUpdate({ _id: orderItem[i].id }, { stock }, { new: true })
+      console.log(del)
+    }
 
     let total = 0;
     for (let i = 0; i < cartItems.length; i++) {
@@ -75,7 +87,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         total,
         products: orderItem
       })
-      await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
+      await Cart.updateMany({ user_id, isOrdered: false }, { isOrdered: true }, { new: true })
 
     }
 
