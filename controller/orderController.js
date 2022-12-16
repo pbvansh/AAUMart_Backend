@@ -23,8 +23,10 @@ const placeOrder = asyncHandler(async (req, res) => {
   const item = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
   let total = 0;
   for (let i = 0; i < item.length; i++) {
-    let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
-    total += sum;
+    if (item[i].product_id.stock >= item[i].quantity) {
+      let sum = Number(item[i].quantity) * Number(item[i].product_id.price)
+      total += sum;
+    }
   }
   if (products) {
     const options = {
@@ -63,15 +65,18 @@ const paymentVerification = asyncHandler(async (req, res) => {
 
     //place order && store data in order table
     const cartItems = await Cart.find({ user_id, isOrdered: false }).populate('product_id');
-    const orderItem = cartItems.map((item) => {
+
+    const data = cartItems.filter((item) => item.product_id.stock > 0)
+
+    const orderItem = data.map((item) => {
       return {
         id: item.product_id._id,
         quantity: item.quantity
       }
     })
-
-    for (let i = 0; i < orderItem.length; i++) {
-      const stock = Number(cartItems[i].product_id.stock) - Number(orderItem[i].quantity)
+    for (let i = 0; i < data.length; i++) {
+      const stock = Number(data[i].product_id.stock) - Number(orderItem[i].quantity)
+      console.log(stock)
       const del = await Product.findByIdAndUpdate({ _id: orderItem[i].id }, { stock }, { new: true })
       console.log(del)
     }
