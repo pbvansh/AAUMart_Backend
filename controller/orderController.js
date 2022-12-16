@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Cart = require('../model/cartModel');
 const Payment = require('../model/paymentModal')
 const Order_item = require('../model/order_itemsModel')
+const Product = require('../model/productModel')
 require('dotenv').config()
 const crypto = require('crypto')
 const Razorpey = require('razorpay')
@@ -69,6 +70,12 @@ const paymentVerification = asyncHandler(async (req, res) => {
       }
     })
 
+    for (let i = 0; i < orderItem.length; i++) {
+      const stock = Number(cartItems[i].product_id.stock) - Number(orderItem[i].quantity)
+      const del = await Product.findByIdAndUpdate({ _id: orderItem[i].id }, { stock }, { new: true })
+      console.log(del)
+    }
+
     let total = 0;
     for (let i = 0; i < cartItems.length; i++) {
       let sum = Number(cartItems[i].quantity) * Number(cartItems[i].product_id.price)
@@ -80,7 +87,7 @@ const paymentVerification = asyncHandler(async (req, res) => {
         total,
         products: orderItem
       })
-      await Cart.updateMany({ isOrdered: false }, { isOrdered: true }, { new: true })
+      await Cart.updateMany({ user_id, isOrdered: false }, { isOrdered: true }, { new: true })
 
     }
 
