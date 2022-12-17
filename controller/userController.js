@@ -1,11 +1,24 @@
 const User = require("../model/userModel")
 const fetch = require('node-fetch')
 const Address = require('../model/addressModel')
-const SMTPClient = require('emailjs')
+const bc = require('bcryptjs')
 
 const getAllUser = async (req, res) => {
   const user = await User.find().select('-password')
   res.status(200).json(user)
+}
+const changePassword = async (req, res) => {
+  let { email, password } = req.body;
+  console.log(email, password);
+  if (email && password) {
+    const salt = await bc.genSalt(10)
+    password = await bc.hash(password, salt);
+    const user = await User.findOneAndUpdate({ email }, { password }, { new: true });
+    console.log(user);
+    res.status(200).json({ msg: 'Password changed successfully', done: true })
+  } else {
+    res.status(200).json({ msg: 'Enter your new password', done: false })
+  }
 }
 
 const resetPassword = async (req, res) => {
@@ -60,5 +73,6 @@ module.exports = {
   getAllUser,
   getAddress,
   deleteUser,
-  resetPassword
+  resetPassword,
+  changePassword
 }
